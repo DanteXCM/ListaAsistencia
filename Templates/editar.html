@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Registro</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; }
+        .form-container { max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        h1 { color: #ffc107; margin-top: 0; border-bottom: 2px solid #ffc107; padding-bottom: 10px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        input[type="text"], input[type="date"], select {
+            width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ced4da; border-radius: 4px; box-sizing: border-box;
+        }
+        input[type="checkbox"] { width: auto; margin-right: 10px; }
+        button {
+            padding: 12px 20px; background-color: #ffc107; color: black; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;
+        }
+        button:hover { background-color: #e0a800; }
+        .back-link { display: block; margin-top: 20px; color: #007bff; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>📝 Editar Registro #{{ indice + 1 }}</h1>
+        <p>Hora de Registro Original: <strong>{{ registro['hora_registro'] }}</strong></p>
+
+        <form method="POST" action="{{ url_for('editar', indice=indice) }}">
+            
+            <label for="nombre">Nombre del Alumno:</label>
+            <input type="text" id="nombre" name="nombre" value="{{ registro['nombre'] }}" required>
+            
+            <label for="fecha">Fecha de Asistencia:</label>
+            <input type="date" id="fecha" name="fecha" value="{{ registro['fecha'] }}" required>
+            
+            <label for="asistio">Estado de Asistencia:</label>
+            <select id="asistio" name="asistio">
+                <option value="True" {% if registro['asistio'] %}selected{% endif %}>Asistió</option>
+                <option value="False" {% if not registro['asistio'] %}selected{% endif %}>Faltó</option>
+            </select>
+            
+            <button type="submit">Guardar Cambios</button>
+        </form>
+        
+        <a href="{{ url_for('index') }}" class="back-link">← Ver Registros</a>
+    </div>
+</body>
+</html>
